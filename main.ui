@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1501</width>
+    <width>1004</width>
     <height>795</height>
    </rect>
   </property>
@@ -63,7 +63,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>imb_binary</string>
+     <string>img_grayscale</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">
@@ -76,64 +76,8 @@
      </rect>
     </property>
     <property name="text">
-     <string>contour</string>
+     <string>img_binary</string>
     </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>1000</x>
-      <y>30</y>
-      <width>491</width>
-      <height>371</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>img_grayscale</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>1000</x>
-      <y>410</y>
-      <width>491</width>
-      <height>371</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>hoough circle</string>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="comboBox">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>0</y>
-      <width>251</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <item>
-     <property name="text">
-      <string>ADAPTIVE_THRESH_GAUSSIAN_C</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>cv.ADAPTIVE_THRESH_MEAN_C</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>cv.THRESH_BINARY + cv.THRESH_OTSU</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </item>
    </widget>
   </widget>
  </widget>
