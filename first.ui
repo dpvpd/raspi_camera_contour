@@ -315,7 +315,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>400</y>
+      <y>450</y>
       <width>211</width>
       <height>21</height>
      </rect>
@@ -372,6 +372,41 @@
      <string>Save</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_14">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>350</y>
+      <width>121</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Max Dis. StdDevi.</string>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="distStdDev">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>350</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>6</number>
+    </property>
+    <property name="maximum">
+     <double>2147483647.999989986419678</double>
+    </property>
+    <property name="singleStep">
+     <double>0.000001000000000</double>
+    </property>
+    <property name="value">
+     <double>0.300000000000000</double>
+    </property>
+   </widget>
   </widget>
  </widget>
  <tabstops>
@@ -384,7 +419,9 @@
   <tabstop>houghMaxrad</tabstop>
   <tabstop>threshold</tabstop>
   <tabstop>circleRange</tabstop>
+  <tabstop>distStdDev</tabstop>
   <tabstop>pushButton</tabstop>
+  <tabstop>pushButton_2</tabstop>
  </tabstops>
  <resources/>
  <connections/>

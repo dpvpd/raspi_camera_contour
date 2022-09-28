@@ -13,6 +13,8 @@ ui = uic.loadUiType(dir+'first.ui')[0]
 distance = lambda p1,p2:(((p1[0]-p2[0])**2)+((p1[1]-p2[1])**2))**.5
 area = lambda p1,p2:abs(p1[0]-p2[0])*abs(p1[1]-p2[1])
 
+fontSize,textOrg = 2,(20,70)
+
 cap = cv.VideoCapture(0)
 
 class Form(QtWidgets.QMainWindow, ui):
@@ -36,6 +38,7 @@ class Form(QtWidgets.QMainWindow, ui):
                 self.houghMinrad.setValue(pickle.load(f))
                 self.houghMaxrad.setValue(pickle.load(f))
                 self.circleRange.setValue(pickle.load(f))
+                self.distStdDev.setValue(pickle.load(f))
         except:
             pass
 
@@ -49,7 +52,25 @@ class Form(QtWidgets.QMainWindow, ui):
             pickle.dump(self.houghMinrad.value(),f)
             pickle.dump(self.houghMaxrad.value(),f)
             pickle.dump(self.circleRange.value(),f)
+            pickle.dump(self.distStdDev.value(),f)
+            
     
+    def isBothCircle(self,contours,centers) -> bool:
+        for c in range(len(contours[:])):
+            centre = centers[c]
+            l = []
+            for i in contours[c][:10]:
+                l.append(distance(centre,list(i[0])))
+            mean = sum(l)/len(l)
+            a = 0
+            for i in l:
+                a+=(i-mean)**2
+            sigma = (a/len(l))**.5
+            #print(sigma)
+            if sigma > self.distStdDev.value():
+                return False
+        return True
+
     def takeAPicture(self):
         #labelsize = (781,561)
         labelsize = (781,439)
@@ -79,7 +100,7 @@ class Form(QtWidgets.QMainWindow, ui):
         if circles is not None:
             #과다검출
             if len(circles[0]) > 2:
-                img = cv.putText(img,'Too many circles detected.',(20,70),cv.FONT_HERSHEY_SIMPLEX,2,(0,255,0),4)
+                img = cv.putText(img,'Too many circles detected.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(0,255,0),4)
             #1 or 2개 검출
             else:
                 #사각형 범위 구하기
@@ -112,7 +133,7 @@ class Form(QtWidgets.QMainWindow, ui):
 
                 #크롭한 이미지 컨투어 검출
                 contours, hierarchy = cv.findContours(im_binary,cv.RETR_LIST,cv.CHAIN_APPROX_NONE)
-                
+                centers = []
                 for c in range(len(contours[:])):
                     cv.drawContours(im,[contours[c]],0,(0,255,0),1)
                     M = cv.moments(contours[c])
@@ -125,11 +146,15 @@ class Form(QtWidgets.QMainWindow, ui):
                     except ZeroDivisionError:
                         cy = int(M['m01'])
                     centre = (cx,cy)
+                    centers.append(centre)
 
                     cv.circle(im,(cx,cy),2,(255,0,0),-1)
                 cv.imshow('cropped image',im)
 
-
+                if self.isBothCircle(contours,centers):
+                    img = cv.putText(img,'All Detected Objects are Perfectly Circle.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(255,0,0),4)
+                else:
+                    img = cv.putText(img,'Some Detected Objects are NOT Perfectly Circle.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(0,0,255),4)
 
                 #이미지에 사각형 그리기
                 for i in rects:
@@ -137,7 +162,7 @@ class Form(QtWidgets.QMainWindow, ui):
 
         #원 미검출
         else:
-            img = cv.putText(img,'No circles detected.',(20,70),cv.FONT_HERSHEY_SIMPLEX,2,(0,255,0),4)
+            img = cv.putText(img,'No circles detected.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(0,255,0),4)
 
         #이미지 출력
         img1 = cv.resize(img, dsize=labelsize, interpolation=cv.INTER_AREA)
