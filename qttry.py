@@ -28,8 +28,8 @@ class Form(QtWidgets.QMainWindow, ui):
 
     def takeAPicture(self):
         labelsize = (491,276)
-        #ret, img = cap.read()
-        img = cv.imread('donut.jpeg')
+        ret, img = cap.read()
+        #img = cv.imread('donut.jpeg')
         img1 = cv.resize(img, dsize=labelsize, interpolation=cv.INTER_AREA)
         img1 = cv.cvtColor(img1,cv.COLOR_BGR2RGB)
         h,w,c = img1.shape
