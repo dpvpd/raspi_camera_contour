@@ -129,7 +129,10 @@ class Form(QtWidgets.QMainWindow, ui):
                 im = img[rect[0][1]:rect[1][1],rect[0][0]:rect[1][0]]
                 
                 #크롭한 이미지 블러, 흑백, 이진화
-                im_blur = cv.GaussianBlur(im,(1,1),self.blurStdDev_2.value())
+                try:
+                    im_blur = cv.GaussianBlur(im,(1,1),self.blurStdDev_2.value())
+                except:
+                    im_blur = cv.medianBlur(im,int(self.blurStdDev_2.value()))
                 im_gray = cv.cvtColor(im_blur,cv.COLOR_BGR2GRAY)
                 ret, im_binary = cv.threshold(im_gray,127,255,binary)
 
