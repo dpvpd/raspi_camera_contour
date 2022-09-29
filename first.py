@@ -13,7 +13,7 @@ ui = uic.loadUiType(dir+'first.ui')[0]
 distance = lambda p1,p2:(((p1[0]-p2[0])**2)+((p1[1]-p2[1])**2))**.5
 area = lambda p1,p2:abs(p1[0]-p2[0])*abs(p1[1]-p2[1])
 
-fontSize,textOrg = 2,(20,70)
+fontSize,textOrg = 0.75,(10,40)
 
 cap = cv.VideoCapture(0)
 
@@ -74,9 +74,9 @@ class Form(QtWidgets.QMainWindow, ui):
         return True
 
     def takeAPicture(self):
-        #labelsize = (781,561)
-        labelsize = (781,439)
-
+        #labelsize = (781,561)  #original
+        labelsize = (781,439)  #16:9 MBP 1080p webcam
+        #labelsize = (747,561)  #raspberry pi V2 cam
 
         #사진 찍기
         ret, img = cap.read()
@@ -84,7 +84,7 @@ class Form(QtWidgets.QMainWindow, ui):
         #img = cv.imread('경로')
         
         #가우시안 블러
-        img_blur = cv.GaussianBlur(img,(0,0),self.blurStdDev.value())
+        img_blur = cv.GaussianBlur(img,(1,1),self.blurStdDev.value())
         #미디안 블러
         #img_blur = cv.medianBlur(img,5)
 
@@ -102,7 +102,7 @@ class Form(QtWidgets.QMainWindow, ui):
         if circles is not None:
             #과다검출
             if len(circles[0]) > 2:
-                img = cv.putText(img,'Too many circles detected.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(0,255,0),4)
+                img = cv.putText(img,'Too many circles detected.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(0,255,0),2)
             #1 or 2개 검출
             else:
                 #사각형 범위 구하기
@@ -129,7 +129,7 @@ class Form(QtWidgets.QMainWindow, ui):
                 im = img[rect[0][1]:rect[1][1],rect[0][0]:rect[1][0]]
                 
                 #크롭한 이미지 블러, 흑백, 이진화
-                im_blur = cv.GaussianBlur(im,(0,0),self.blurStdDev_2.value())
+                im_blur = cv.GaussianBlur(im,(1,1),self.blurStdDev_2.value())
                 im_gray = cv.cvtColor(im_blur,cv.COLOR_BGR2GRAY)
                 ret, im_binary = cv.threshold(im_gray,127,255,binary)
 
@@ -154,9 +154,9 @@ class Form(QtWidgets.QMainWindow, ui):
                 cv.imshow('cropped image',im)
 
                 if self.isBothCircle(contours,centers):
-                    img = cv.putText(img,'All Detected Objects are Perfectly Circle.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(255,0,0),4)
+                    img = cv.putText(img,'All Detected Objects are Perfectly Circle.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(255,0,0),2)
                 else:
-                    img = cv.putText(img,'Some Detected Objects are NOT Perfectly Circle.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(0,0,255),4)
+                    img = cv.putText(img,'Some Detected Objects are NOT Perfectly Circle.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(0,0,255),2)
 
                 #이미지에 사각형 그리기
                 for i in rects:
@@ -164,7 +164,7 @@ class Form(QtWidgets.QMainWindow, ui):
 
         #원 미검출
         else:
-            img = cv.putText(img,'No circles detected.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(0,255,0),4)
+            img = cv.putText(img,'No circles detected.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(0,255,0),2)
 
         #이미지 출력
         img1 = cv.resize(img, dsize=labelsize, interpolation=cv.INTER_AREA)
