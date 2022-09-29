@@ -407,6 +407,41 @@
      <double>0.300000000000000</double>
     </property>
    </widget>
+   <widget class="QLabel" name="label_15">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>380</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Crop Gsn. StdDevi.</string>
+    </property>
+   </widget>
+   <widget class="QDoubleSpinBox" name="blurStdDev_2">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>380</y>
+      <width>81</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="decimals">
+     <number>5</number>
+    </property>
+    <property name="maximum">
+     <double>2147483647.999989986419678</double>
+    </property>
+    <property name="singleStep">
+     <double>0.000010000000000</double>
+    </property>
+    <property name="value">
+     <double>3.000000000000000</double>
+    </property>
+   </widget>
   </widget>
  </widget>
  <tabstops>

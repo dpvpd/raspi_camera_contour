@@ -39,6 +39,7 @@ class Form(QtWidgets.QMainWindow, ui):
                 self.houghMaxrad.setValue(pickle.load(f))
                 self.circleRange.setValue(pickle.load(f))
                 self.distStdDev.setValue(pickle.load(f))
+                self.blurStdDev_2.setValue(pickle.load(f))
         except:
             pass
 
@@ -53,6 +54,7 @@ class Form(QtWidgets.QMainWindow, ui):
             pickle.dump(self.houghMaxrad.value(),f)
             pickle.dump(self.circleRange.value(),f)
             pickle.dump(self.distStdDev.value(),f)
+            pickle.dump(self.blurStdDev_2.value(),f)
             
     
     def isBothCircle(self,contours,centers) -> bool:
@@ -127,7 +129,7 @@ class Form(QtWidgets.QMainWindow, ui):
                 im = img[rect[0][1]:rect[1][1],rect[0][0]:rect[1][0]]
                 
                 #크롭한 이미지 블러, 흑백, 이진화
-                im_blur = cv.GaussianBlur(im,(0,0),self.blurStdDev.value())
+                im_blur = cv.GaussianBlur(im,(0,0),self.blurStdDev_2.value())
                 im_gray = cv.cvtColor(im_blur,cv.COLOR_BGR2GRAY)
                 ret, im_binary = cv.threshold(im_gray,127,255,binary)
 
