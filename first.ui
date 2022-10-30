@@ -126,7 +126,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Hough Min Rad.</string>
+     <string>Hough Min Dist.</string>
     </property>
    </widget>
    <widget class="QSpinBox" name="MINRAD">
@@ -321,7 +321,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Add some more options if it needs</string>
+     <string/>
     </property>
    </widget>
    <widget class="QLabel" name="label_13">

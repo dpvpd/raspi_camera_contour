@@ -13,7 +13,7 @@ ui = uic.loadUiType(dir+'first.ui')[0]
 distance = lambda p1,p2:(((p1[0]-p2[0])**2)+((p1[1]-p2[1])**2))**.5
 area = lambda p1,p2:abs(p1[0]-p2[0])*abs(p1[1]-p2[1])
 
-fontSize,textOrg = 0.75,(10,40)
+fontSize,textOrg = 2,(20,70)
 
 cap = cv.VideoCapture(0)
 
@@ -79,9 +79,9 @@ class Form(QtWidgets.QMainWindow, ui):
         #labelsize = (747,561)  #raspberry pi V2 cam
 
         #사진 찍기
-        ret, img = cap.read()
+        #ret, img = cap.read()
         #또는 사진 불러오기
-        #img = cv.imread('경로')
+        img = cv.imread('test3.jpeg')
         
         #가우시안 블러
         img_blur = cv.GaussianBlur(img,(1,1),self.blurStdDev.value())
@@ -157,9 +157,9 @@ class Form(QtWidgets.QMainWindow, ui):
                 cv.imshow('cropped image',im)
 
                 if self.isBothCircle(contours,centers):
-                    img = cv.putText(img,'All Detected Objects are Perfectly Circle.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(255,0,0),2)
+                    img = cv.putText(img,'Perfect Circle.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(255,0,0),2)
                 else:
-                    img = cv.putText(img,'Some Detected Objects are NOT Perfectly Circle.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(0,0,255),2)
+                    img = cv.putText(img,'Not a Circle.',textOrg,cv.FONT_HERSHEY_SIMPLEX,fontSize,(0,0,255),2)
 
                 #이미지에 사각형 그리기
                 for i in rects:
